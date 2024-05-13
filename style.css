@@ -4,11 +4,16 @@
   box-sizing: border-box;
 }
 
+/* Defining CSS variables */
+
 :root {
-  --side-bg-color: #1d1c1cfc;
+  --side-bg-color: #121212fc;
   --top-bg-color: linear-gradient(to right, rgb(144, 139, 139), rgb(12, 0, 0));
   --front-bg-color: rgb(67, 67, 67);
-  --hover-bg-color: rgb(66, 143, 237);
+  --hover-bg-color: rgb(74, 105, 143);
+  --hover-border-color: rgba(100, 189, 252, 0.205);
+  --number-items: 6;
+  --menu-border: 0.4px solid var(--hover-border-color);
 }
 
 body {
@@ -69,11 +74,13 @@ main {
   padding-top: 30px;
   height: 70vh;
   width: 100vw;
+  color: rgb(208, 205, 205);
+  text-transform: uppercase;
 }
 
 .item-container0 {
   position: relative;
-  z-index: 6;
+  z-index: var(--number-items);
 }
 
 .item-container0:hover {
@@ -86,12 +93,14 @@ main {
   }
   50% {
     /* transform: translateX(0); */
-    transform: translate(-40px, 3px);
+    transform: translate(-50px, 2.3px);
   }
   100% {
-    transform: translate(-30px, 3px);
+    transform: translate(-30px, 1px);
   }
 }
+
+/* Backview */
 
 .frontview {
   position: absolute;
@@ -102,35 +111,75 @@ main {
   transform: skewY(-5deg);
 }
 
+/* The ::before preselector is used to display the Frontview */
+
 .frontview::before {
-  content: "";
+  content: var(--title);
   padding-left: 10px;
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(26.5px, 24px);
+  transform: translate(25.9px, 23.2px);
   background-color: var(--front-bg-color);
-  height: 35px;
-  width: 188px;
-  border-right: 1px solid var(--front-bg-color);
-  z-index: 1;
+  border-right: none;
+  height: 35.9px;
+  width: 189.9px;
+
+  z-index: var(--number-items);
 }
 
+:is(
+    .item-container0:hover,
+    .item-container1:hover,
+    .item-container2:hover,
+    .item-container3:hover,
+    .item-container4:hover,
+    .item-container5:hover
+  )
+  .frontview::before {
+  background-color: var(--hover-bg-color);
+  border-right: var(--menu-border);
+}
+
+:is(
+    .item-container0:hover,
+    .item-container1:hover,
+    .item-container2:hover,
+    .item-container3:hover,
+    .item-container4:hover,
+    .item-container5:hover
+  )
+  .sideview {
+  background-color: var(--hover-bg-color);
+  border: var(--menu-border);
+}
+
+:is(
+    .item-container0:hover,
+    .item-container1:hover,
+    .item-container2:hover,
+    .item-container3:hover,
+    .item-container4:hover,
+    .item-container5:hover
+  )
+  .topview {
+  background: var(--hover-bg-color);
+  border: var(--menu-border);
+}
+
+/* Top view */
 .topview {
   position: absolute;
-  height: 22px;
+  height: 21.8px;
   width: 200px;
-  border: 1px solid var(--top-bg-color);
+  border: var(--menu-border);
   background: var(--top-bg-color);
-  transform: skew(50deg, -5deg) translate(13px, -0.125px);
-  opacity: 1;
+  transform: skew(50deg, -5deg) translate(13.9px, -0.5px);
 }
 
+/* Displays the bottom of each item */
 .topview::after {
   content: "";
-  border: 1px solid var(--top-bg-color);
-  border-top: none;
-  border-right: none;
   position: absolute;
   height: 21.5px;
   width: 197px;
@@ -142,12 +191,13 @@ main {
   top: 0;
   left: 0;
   width: 26px;
-  height: 36px;
-  border: 1px solid var(--side-bg-color);
+  height: 35.8px;
+  border: var(--menu-border);
   background-color: var(--side-bg-color);
   border-top: none;
   border-bottom: none;
-  transform: skewY(40deg) translateY(18px);
+  transform: skewY(40deg) translateY(17.8px);
+  z-index: 10;
 }
 
 /* Item container 1 */
@@ -155,7 +205,7 @@ main {
 .item-container1 {
   position: relative;
   top: 34.5px;
-  z-index: 5;
+  z-index: calc(var(--number-items) - 1);
 }
 
 .item-container1:hover {
@@ -166,7 +216,7 @@ main {
 .item-container2 {
   position: relative;
   top: 69px;
-  z-index: 4;
+  z-index: calc(var(--number-items) - 2);
 }
 
 .item-container2:hover {
@@ -177,7 +227,7 @@ main {
 .item-container3 {
   position: relative;
   top: 103px;
-  z-index: 3;
+  z-index: calc(var(--number-items) - 3);
 }
 
 .item-container3:hover {
@@ -187,8 +237,8 @@ main {
 
 .item-container4 {
   position: relative;
-  top: 137px;
-  z-index: 2;
+  top: 137.5px;
+  z-index: calc(var(--number-items) - 4);
 }
 
 .item-container4:hover {
@@ -198,11 +248,12 @@ main {
 
 .item-container5 {
   position: relative;
-  top: 172px;
-  z-index: 1;
+  top: 173px;
+  z-index: calc(var(--number-items) - 5);
 }
 
 .item-container5:hover {
   animation: animateMenu 0.5s ease-in-out 0.1s forwards;
   cursor: pointer;
+  z-index: calc(var(--number-items) - 6);
 }
